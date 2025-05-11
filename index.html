@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Image to Video</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white shadow-lg rounded-xl p-8 w-full max-w-lg">
+    <h1 class="text-2xl font-bold mb-4 text-center">AI Image to Video (Pika Labs)</h1>
+    
+    <form id="imageForm">
+      <label class="block mb-2 font-medium">Upload Image:</label>
+      <input type="file" id="imageInput" accept="image/*" class="mb-4 w-full" required />
+
+      <label class="block mb-2 font-medium">Enter Prompt:</label>
+      <textarea id="promptInput" class="mb-4 w-full border rounded p-2" rows="3" placeholder="A cyberpunk city in the rain at night" required></textarea>
+
+      <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 w-full">Generate</button>
+    </form>
+
+    <div id="output" class="mt-6 hidden">
+      <p class="font-medium text-green-600">Your command has been copied. Paste it in the Pika Labs Discord bot channel.</p>
+      <textarea id="pikaCommand" class="w-full mt-2 p-2 border rounded text-sm" readonly></textarea>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('imageForm');
+    const output = document.getElementById('output');
+    const pikaCommand = document.getElementById('pikaCommand');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const prompt = document.getElementById('promptInput').value;
+      const imageInput = document.getElementById('imageInput');
+
+      if (imageInput.files.length === 0) {
+        alert('Please upload an image');
+        return;
+      }
+
+      const command = `/create prompt: ${prompt}`;
+
+      pikaCommand.value = command;
+      output.classList.remove('hidden');
+      pikaCommand.select();
+      document.execCommand('copy');
+    });
+  </script>
+</body>
+</html>
